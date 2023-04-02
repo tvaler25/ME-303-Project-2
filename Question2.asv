@@ -48,25 +48,18 @@ end
 
 
 %% plot
+figure(1)
+[T, X] = meshgrid(0:dt:T, x); 
+surf(T, X, temp); 
+shading interp
+colormap('hot')
+xlabel('t'); 
+ylabel('x'); 
+zlabel('T(x,t)'); colorbar
 
 figure(2)
-[Temp, X] = meshgrid(0:dt:T, x);
-surf(Temp, X, exact)
-shading interp
-colormap('jet')
-xlabel('t'); 
-ylabel('x'); 
-zlabel('T(x,t)'); colorbar
-
-figure(1)
-[Temp, X] = meshgrid(0:dt:T, x); 
-surf(Temp, X, temp); 
-shading interp
-colormap('jet')
-xlabel('t'); 
-ylabel('x'); 
-zlabel('T(x,t)'); colorbar
-
+[T, X] = meshgrid(0:dt:T, x);
+surf(T)
 
 
 
