@@ -44,14 +44,20 @@ for j=1:M % time coordinate = j/M
     for i=2:N % space coordinate = i/N
         temp(i, j+1) = temp(i, j) + F * (temp(i+1, j) - 2*temp(i, j) + temp(i-1, j));
         
-        %find exact temperature
-        exact(i, j) = exactTemp((i*dx), (j*dt), Cn);
+        
     end
     temp(1, j+1) = 0; % DBC left
 
     
     temp(N+1, j+1) = 2; % DBC right: a time-varying one
 end
+
+for j=1:M
+
+    for i=1:N+1
+        %find exact temperature
+        exact(i, j) = exactTemp((i*dx), (j*dt), Cn);
+        
 
 
 %% plot
@@ -79,6 +85,7 @@ zlabel('T(x,t)'); colorbar
 
 function exactTemp = exactTemp (x, t, Cn)
     sum = 0;
+    
     for n=1:length(Cn)
         termN = Cn(n)*sin(n*pi*x)*exp(-2*(n^2)*(pi^2)*t);
         sum = sum + termN;

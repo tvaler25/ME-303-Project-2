@@ -16,7 +16,7 @@ N=20;   % cut space into N sections
 
 
 M=2500; % cut time  into M sections
-J=100; % use J iterations of the summation
+J=1000; % use J iterations of the summation
 dx=L/N; dt=T/M; % grid spacing
 
 F=k*dt/dx^2;
@@ -37,6 +37,8 @@ x = linspace(0, L, N+1);
  
 % Initial Condition
 temp(:, 1) = cos(pi * x);
+temp(1,1)=0;
+temp(N+1,1)=2;
  
 % Explicit Scheme for Partial Difference Equation
 for j=1:M % time coordinate = j/M
@@ -44,13 +46,19 @@ for j=1:M % time coordinate = j/M
     for i=2:N % space coordinate = i/N
         temp(i, j+1) = temp(i, j) + F * (temp(i+1, j) - 2*temp(i, j) + temp(i-1, j));
         
-        %find exact temperature
-        exact(i, j) = exactTemp((i*dx), (j*dt), Cn);
+        
     end
     temp(1, j+1) = 0; % DBC left
-
     
     temp(N+1, j+1) = 2; % DBC right: a time-varying one
+end
+
+for j=1:M+1
+
+    for i=1:N+1
+        %find exact temperature
+        exact(i, j) = exactTemp(((i-1)*dx), ((j-1)*dt), Cn);
+    end
 end
 
 
@@ -79,6 +87,7 @@ zlabel('T(x,t)'); colorbar
 
 function exactTemp = exactTemp (x, t, Cn)
     sum = 0;
+    
     for n=1:length(Cn)
         termN = Cn(n)*sin(n*pi*x)*exp(-2*(n^2)*(pi^2)*t);
         sum = sum + termN;
