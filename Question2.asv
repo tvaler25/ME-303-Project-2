@@ -3,10 +3,18 @@ clear
 clc
 close all
 
+grid_spacing=[0.001,0.01,0.1,10];
+for dx=1:1:4 %loop through each gridspacing 
+    dx=grid_spacing(1);
+    dt=grid_spacing(1);
+end % still need to figure out how to compare
+
 L= 1;         % x in (0,L)
-T= 0.1;       % t in (0,T)
+T= 0.5;       % t in (0,T)
 k=2;    % conductivity
 N=20;   % cut space into N sections
+
+
 M=2500; % cut time  into M sections
 J=100; % use J iterations of the summation
 dx=L/N; dt=T/M; % grid spacing
@@ -40,26 +48,32 @@ for j=1:M % time coordinate = j/M
         exact(i, j) = exactTemp((i*dx), (j*dt), Cn);
     end
     temp(1, j+1) = 0; % DBC left
-%     temp(1, j+1) = 2 + temp(2, j+1); % NBC left
+
     
-%     temp(N+1, j+1) = 0; % DBC right: a constant BC
     temp(N+1, j+1) = 2; % DBC right: a time-varying one
 end
 
 
 %% plot
-figure(1)
-[T, X] = meshgrid(0:dt:T, x); 
-surf(T, X, temp); 
+
+figure('Name','Analytical')
+[X, Time] = meshgrid(0:dt:T, x);
+surf(X,Time, exact)
 shading interp
-colormap('hot')
+colormap('jet')
 xlabel('t'); 
 ylabel('x'); 
 zlabel('T(x,t)'); colorbar
 
 figure(2)
-[T, X] = meshgrid(0:dt:T, x);
-surf(T)
+[Time, X] = meshgrid(0:dt:T, x); 
+surf(Time, X, temp); 
+shading interp
+colormap('jet')
+xlabel('t'); 
+ylabel('x'); 
+zlabel('T(x,t)'); colorbar
+
 
 
 
