@@ -5,13 +5,13 @@ close all
 
 L= 1;         % x in (0,L)
 T= 10;       % t in (0,T)
-k=2;    % conductivity
+k=2;    % conductivity will not change
 
-%grid spacing
-%dt=0.03;
 
-N=50;   % cut space into N sections
-M=150000; % cut time  into M sections
+
+
+N=15;   % cut space into N sections
+M=10000; % cut time  into M sections
 J=1000; % use J iterations of the summation
 dx=L/N; 
 dt=T/M; % grid spacing
@@ -93,7 +93,7 @@ if (1-2*F)>0
         slices(:,slice_number+4)=exact(:, sliced_time_indices(slice_number));
     end
 
-    position_x=linspace(0,L,N+1)'
+    position_x=linspace(0,L,N+1)';
 
 
     
@@ -110,6 +110,7 @@ if (1-2*F)>0
     %legend(legendText)
     xlabel('Position X')
     ylabel('Temp')
+    legend('0.001 Num','0.01 Num','0.1 Num','10 Num','0.001 Act','0.01 Act','0.1 Act','10 Act')
 
     
     
