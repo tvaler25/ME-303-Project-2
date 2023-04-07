@@ -105,7 +105,7 @@ if (1-2*F)>0
         plot(position_x, slices(:, i), 'LineWidth', 2);
     end
     hold off
-    grid
+%     grid
 %     legendText =  "F: " + string(frontStiffnessDisplay)+ ", R: " + string(rearStiffnessDisplay) + " (kN/rad)";
     %legend(legendText)
     xlabel('Position X')
