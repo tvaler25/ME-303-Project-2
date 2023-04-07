@@ -72,7 +72,7 @@ if (1-2*F)>0
     ylabel('x'); 
     zlabel('T(x,t)'); colorbar
     
-    figure(2)
+    figure('Name', 'Numerical')
     [Time, X] = meshgrid(0:dt:T, x); 
     surf(Time, X, temp); 
     shading interp
