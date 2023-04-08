@@ -7,25 +7,23 @@ T= 1;       % t in (0,T)
 k=2;    % conductivity will not change
 
 
-iter=      [1/25000, 1/20000, 1/15000, 1/10000, 1/1000]; % use J iterations of the summation
-dx_array=  [1/100, 1/75, 1/50, 1/25, 1/15];
+iter=      [1/1000,1/5000,1/10000, 1/15000, 1/20000, 1/25000]; %
+dx_array=  [1/30, 1/25, 1/15];
 
 error = zeros(length(iter), length(dx_array)); %generat an array to stare error
 
 for dx_number=1:length(dx_array)
-    dx = dx_array(dx_number)
+    dx = dx_array(dx_number);
     N=round(L/dx);
 
     for p=1:length(iter)
-        %fprintf('Grid Spacing %s\n',iter(p));
-        J = 1000;
-        dt = iter(p)
+        J = 1000;%iterations for analytical 
+        dt = iter(p); 
         M=round(T/dt);
         
-        %fprintf('M %s\n',M);
-        
+
         F=k*(dt/dx)^2;
-        if (1-2*F)>0
+        if (1-2*F)>0 %check if unstable 
             
             %Find Cn from n=1 to n=Jmax
             Cn = zeros(J, 1);
@@ -35,6 +33,7 @@ for dx_number=1:length(dx_array)
             end
             Cn = Cn/pi;
             
+            %set matrix
             numerical = zeros(N+1, M+1);
             analytical = zeros(N+1, M+1);
     
@@ -51,12 +50,10 @@ for dx_number=1:length(dx_array)
     
                 for i=2:N % space coordinate = i/N
                     numerical(i, j+1) = numerical(i, j) + F * (numerical(i+1, j) - 2*numerical(i, j) + numerical(i-1, j));
-    
-    
                 end
-                numerical(1, j+1) = 0; % DBC left
+                numerical(1, j+1) = 0; % BC left
     
-                numerical(N+1, j+1) = 2; % DBC right: a time-varying one
+                numerical(N+1, j+1) = 2; % BC right: a time-varying one
             end
             
             
@@ -70,7 +67,7 @@ for dx_number=1:length(dx_array)
             
     
             
-        error(p,dx_number) = rmse(analytical, numerical);
+            
                
     %         figure('Name','Analytical')
     %         [X, Time] = meshgrid(0:dt:T, x);
@@ -91,23 +88,18 @@ end
 
 %% plot
 
-% disp(error);
-% iter=iter';
-% disp(iter);
-
-%iter(1) = [];
-%disp(iter)
-%disp(error)
 figure('Name', 'Errors')
-loglog(iter, error(1,:), 'LineWidth', 2, 'color', 'red', 'Marker', 'square');
+loglog(iter, error(:,1), 'LineWidth', 2, 'Marker', 'square');
 hold on
-for i=2:1:length(error(1))
-    plot(iter, error(i,:), 'LineWidth', 2, 'color', 'red', 'Marker', 'square');
+for i=2:1:length(dx_array)
+    plot(iter, error(:,i), 'LineWidth', 2, 'Marker', 'square');
 end
+grid;
 hold off
-title('error in numerical solutions')
-xlabel('Grid Spacing dt')
-ylabel('RMS error)')
+title('Error In Numerical Solutions')
+xlabel('Grid Spacing (dt)')
+ylabel('RMS error')
+legend('dx=1/30','dx=1/25','dx=1/15')
 
 function exactTemp = exactTemp (x, t, Cn)
     sum = 0;

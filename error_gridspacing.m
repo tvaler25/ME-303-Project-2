@@ -8,7 +8,7 @@ k=2;    % conductivity will not change
 
 
 iter=      [1/1000,1/5000,1/10000, 1/15000, 1/20000, 1/25000]; %
-dx_array=  [1/30,1/25, 1/15];
+dx_array=  [1/30, 1/25, 1/15];
 
 error = zeros(length(iter), length(dx_array)); %generat an array to stare error
 
@@ -67,7 +67,7 @@ for dx_number=1:length(dx_array)
             
     
             
-        error(p,dx_number) = rmse(analytical, numerical); %make error matrix
+            error(p,dx_number) = rmse(analytical, numerical); %make error matrix
                
     %         figure('Name','Analytical')
     %         [X, Time] = meshgrid(0:dt:T, x);
