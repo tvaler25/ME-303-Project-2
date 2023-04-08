@@ -1,4 +1,4 @@
-
+format long
 clear 
 clc
 close all
@@ -12,7 +12,7 @@ k=2;    % conductivity will not change
 
 N=15;   % cut space into N sections
 M=10000; % cut time  into M sections
-iter=[10000, 1, 3, 6, 10, 30, 60, 100, 300, 600, 1000]; % use J iterations of the summation
+iter=[1001, 1, 3, 6, 10, 18, 30, 60, 100, 180, 300, 600, 1000]; % use J iterations of the summation
 dx=L/N; 
 dt=T/M; % grid spacing
 F=k*dt/dx^2;
@@ -70,20 +70,17 @@ if (1-2*F)>0
             error(p-1) = rmse(exact, analytical);
         end
         
-%         figure('Name','Analytical')
-%         [X, Time] = meshgrid(0:dt:T, x);
-%         surf(X,Time, analytical)
-%         shading interp
-%         colormap('jet')
-%         xlabel('t'); 
-%         ylabel('x'); 
-%         zlabel('T(x,t)'); colorbar
+        figure('Name','Analytical')
+        [X, Time] = meshgrid(0:dt:T, x);
+        surf(X,Time, numerical)
+        shading interp
+        colormap('jet')
+        xlabel('t'); 
+        ylabel('x'); 
+        zlabel('T(x,t)'); colorbar
     end
-    
     %% plot
 iter(1) = [];
-disp(iter)
-disp(error)
 figure('Name', 'Errors')
 loglog(iter, error, 'LineWidth', 2, 'color', 'red', 'Marker', 'square');
 grid
@@ -94,7 +91,7 @@ ylabel('RMS error)')
 else
     disp("Unstable")
 end
-    
+
 function exactTemp = exactTemp (x, t, Cn)
     sum = 0;
     

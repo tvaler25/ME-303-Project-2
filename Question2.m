@@ -44,11 +44,8 @@ if (1-2*F)>0
         
         for i=2:N % space coordinate = i/N
             temp(i, j+1) = temp(i, j) + F * (temp(i+1, j) - 2*temp(i, j) + temp(i-1, j));
-            
-            
         end
         temp(1, j+1) = 0; % DBC left
-        
         temp(N+1, j+1) = 2; % DBC right: a time-varying one
     end
     
