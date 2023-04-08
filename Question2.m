@@ -105,9 +105,10 @@ if (1-2*F)>0
 %     grid
 %     legendText =  "F: " + string(frontStiffnessDisplay)+ ", R: " + string(rearStiffnessDisplay) + " (kN/rad)";
     %legend(legendText)
+    title('Temperature With Changing Time')
     xlabel('Position X')
     ylabel('Temp')
-    legend('0.001 Num','0.01 Num','0.1 Num','10 Num','0.001 Act','0.01 Act','0.1 Act','10 Act')
+    legend('t= 0.001 Num','t= 0.01 Num','t= 0.1 Num','t= 10 Num','t= 0.001 Act','t= 0.01 Act','t= 0.1 Act','t= 10 Act')
 
     
     

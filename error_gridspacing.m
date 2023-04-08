@@ -5,7 +5,7 @@ close all
 L= 1;         % x in (0,L)
 T= 1;       % t in (0,T)
 k=2;    % conductivity will not change
-J = 10000;%iterations for analytical 
+J = 1000;%iterations for analytical 
 
 %Find Cn from n=1 to n=Jmax
 Cn = zeros(J, 1);
@@ -26,7 +26,7 @@ for dx_number=1:length(dx_array)
 
     for dt_number=1:length(dt_array)
 
-        dt = dt_array(dt_number)
+        dt = dt_array(dt_number);
         M=round(T/dt);
 
         F=k*dt/dx^2;
@@ -95,6 +95,7 @@ xlabel('Grid Spacing (dt)')
 ylabel('RMS error')
 legendText =  "dx= " + string(dx_array);
 legend(legendText)
+
 function exactTemp = exactTemp (x, t, Cn)
     sum = 0;
     
