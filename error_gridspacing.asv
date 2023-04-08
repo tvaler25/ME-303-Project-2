@@ -7,23 +7,24 @@ T= 1;       % t in (0,T)
 k=2;    % conductivity will not change
 
 
-iter=[1/25000, 1/20000, 1/15000, 1/10000, 1/1000]; % use J iterations of the summation
-dx_array=  [1/20000, 1/15000, 1/10000, 1/1000, 1/500];
+iter=      [1/25000, 1/20000, 1/15000, 1/10000, 1/1000]; % use J iterations of the summation
+dx_array=  [1/100, 1/75, 1/50, 1/25, 1/15];
 
 error = zeros(length(iter), length(dx_array)); %generat an array to stare error
+
 for dx_number=1:length(dx_array)
-    dx = dx_array(dx_number); 
+    dx = dx_array(dx_number)
     N=round(L/dx);
 
     for p=1:length(iter)
         %fprintf('Grid Spacing %s\n',iter(p));
         J = 1000;
-        dt = iter(p);
+        dt = iter(p)
         M=round(T/dt);
         
         %fprintf('M %s\n',M);
         
-        F=k*dt/dx^2;
+        F=k*(dt/dx)^2;
         if (1-2*F)>0
             
             %Find Cn from n=1 to n=Jmax
@@ -98,10 +99,10 @@ end
 %disp(iter)
 %disp(error)
 figure('Name', 'Errors')
-loglog(iter, error(1), 'LineWidth', 2, 'color', 'red', 'Marker', 'square');
+loglog(iter, error(1,:), 'LineWidth', 2, 'color', 'red', 'Marker', 'square');
 hold on
 for i=2:1:length(error(1))
-    plot(iter, slices(:, i), 'LineWidth', 2);
+    plot(iter, error(i,:), 'LineWidth', 2, 'color', 'red', 'Marker', 'square');
 end
 hold off
 title('error in numerical solutions')
