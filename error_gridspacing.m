@@ -76,6 +76,7 @@ for dx_number=1:length(dx_array)
         
         else
             disp("Unstable")
+            error(dt_number,dx_number)=NaN;
         end
     end
 end
@@ -83,7 +84,7 @@ end
 %% plot
 
 figure('Name', 'Errors')
-loglog(dt_array, error(:,1), 'LineWidth', 2, 'Marker', 'square');
+plot(dt_array, error(:,1), 'LineWidth', 2, 'Marker', 'square');
 hold on
 for i=2:1:length(dx_array)
     plot(dt_array, error(:,i), 'LineWidth', 2, 'Marker', 'square');
